@@ -34,3 +34,10 @@ body{
     align-items: center;
     color: white;
 }
+
+.dish-img{
+    margin: 30px 0 30px 70px;
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
+}

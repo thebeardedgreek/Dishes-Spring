@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 
 @Controller
@@ -20,11 +17,31 @@ public class HomeController {
     @Autowired
     DishRepository dishRepository;
 
+    @Autowired
+    FeedbackRepository feedbackRepository;
+
     @RequestMapping("/")
     public String listDishs(Dish dish, Model model){
         model.addAttribute("dishes", dishRepository.findAll());
+        model.addAttribute("feedbackType", feedbackRepository.findAll());
         return "dishlist";
     }
+
+    @RequestMapping("/addfeedback")
+    public String addColor(Model model)
+    {
+        model.addAttribute("aFeedback", new Feedback());
+        model.addAttribute("dishes", dishRepository.findAll());
+        return "feedback";
+    }
+
+    @RequestMapping("/savefeedback")
+    public String saveColor(@ModelAttribute("aFeedback") Feedback feedback, Model model)
+    {
+        feedbackRepository.save(feedback);
+        return "redirect:/";
+    }
+
 
     @GetMapping("/add")
     public String loadFormPage(Model model){
@@ -67,6 +84,18 @@ public class HomeController {
         model.addAttribute("search",searchString);
         model.addAttribute("dishes", dishRepository.findAllByNameContainingIgnoreCase(searchString));
         return "dishlist";
+    }
+
+    @PostConstruct
+    public void fillTables()
+    {
+        Feedback p = new Feedback();
+        p.setFeedbackType("TASTY!");
+        feedbackRepository.save(p);
+
+        p = new Feedback();
+        p.setFeedbackType("NASTY!");
+        feedbackRepository.save(p);
     }
 
 }

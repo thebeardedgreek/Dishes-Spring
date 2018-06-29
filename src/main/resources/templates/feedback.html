@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" type="text/css" href="/dishstyles.css">
+</head>
+<body>
+<form th:action="@{/savefeedback}" th:object="${aFeedback}" method="post" >
+    <div class="content-wrapper app-section">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{feedbackType}">
+        <select th:field="*{dishes}" multiple>
+            <option th:each="eachDish:${dishes}" th:value="${eachDish.id}" th:text="${eachDish.name}"></option>
+        </select>
+    </div>
+
+    <button class="content-wrapper app-section" type="submit">Send Feedback!</button>
+</form>
+</body>
+</html>

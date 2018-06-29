@@ -37,8 +37,8 @@
     <div class="content-wrapper app-section">
         <h4><em><span th:text="${dish.name}" ></span></em></h4><br/>
         <h4>Description: <span th:text="${dish.description}" ></span></h4><br/>
-        <td><img th:src="${dish.imgURL}"></td>
-        <strong><a class="link" th:href="@{/delete/{id}(id=${dish.id})}">Delete This Dish</a></strong>
+        <td><img class="dish-img" th:src="${dish.imgURL}"></td>
+        <td><strong><a class="link" th:href="@{/delete/{id}(id=${dish.id})}">Delete This Dish</a></strong></td>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

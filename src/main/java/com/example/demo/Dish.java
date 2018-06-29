@@ -1,9 +1,6 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.text.DateFormat;
@@ -11,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Dish {
@@ -30,7 +28,18 @@ public class Dish {
     @Size(min = 10)
     private String imgURL;
 
-    private int likes;
+    @ManyToMany(mappedBy = "dishes")
+    private Set<Feedback> feedback;
+
+    public Set<Feedback> getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Set<Feedback> feedback) {
+        this.feedback = feedback;
+    }
+
+
 
     public String getImgURL() {
         return imgURL;
@@ -62,14 +71,6 @@ public class Dish {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
 

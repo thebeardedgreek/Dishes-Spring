@@ -39,9 +39,9 @@
     <div class="content-wrapper app-section" th:if="${search}!=null" th:inline="text">You searched for [[${search}]]</div>
     <div class="app-section">
 
-        <table th:each="dish: ${dishes}" class="app-section content-wrapper">
+        <table th:each="dish: ${dishes}" class="app-section content-wrapper formatter">
             <tr>
-                <th><h2><a th:href="@{/detail/{id}(id=${dish.id})}"><span class="nav-links" th:text="${dish.name}"></span></a></h2></th>
+                <th><h2><a th:href="@{/detail/{id}(id=${dish.id})}"><span class="nav-links" th:text="${dish.name}"></span> :</a></h2></th>
             </tr>
             <tr>
                 <td><img class="dish-img" th:src="${dish.imgURL}"></td>
@@ -49,22 +49,23 @@
             <tr>
                 <td>Description: <span th:text="${dish.description}"></span></td>
             </tr>
+            <br>
+            <tr>
+                <h3><td th:text="${#lists.size(dish.feedback)>0}?'Ratings:'" ></td></h3>
+                <tr th:each="eachFeedback:${dish.feedback}" >
+                    <td th:text="${eachFeedback.feedbackType}"></td>
+                </tr>
+            </tr>
+            <tr style="padding-top: 15px"></tr>
+            <tr>
+                <td class="content-wrapper nav-links"><a href="/addfeedback">Add Feedback!</a></td>
+            </tr>
+            <tr style="padding-top: 15px"></tr>
             <tr>
                 <td><a class="nav-links" th:href="@{/update/{id}(id=${dish.id})}">Update</a></td>
                 <td><a class="nav-links" th:href="@{/delete/{id}(id=${dish.id})}">Delete</a></td>
             </tr>
-            <tr>
-                <td><h4 th:text="${#lists.size(dish.feedback)>0}?'Ratings:'" ></h4></td>
-            <tr th:each="eachFeedback:${dish.feedback}" >
-                <td th:text="${eachFeedback.feedbackType}"></td>
-            </tr>
-            </tr>
         </table>
-    </div>
-</section>
-<section role="Feedback">
-    <div class="content-wrapper app-section">
-        <p><a class="nav-links" href="/addfeedback">Add Feedback!</a></p>
     </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

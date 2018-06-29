@@ -28,7 +28,7 @@ public class HomeController {
     }
 
     @RequestMapping("/addfeedback")
-    public String addColor(Model model)
+    public String addFeedback(Model model)
     {
         model.addAttribute("aFeedback", new Feedback());
         model.addAttribute("dishes", dishRepository.findAll());
@@ -36,7 +36,7 @@ public class HomeController {
     }
 
     @RequestMapping("/savefeedback")
-    public String saveColor(@ModelAttribute("aFeedback") Feedback feedback, Model model)
+    public String saveFeedback(@ModelAttribute("aFeedback") Feedback feedback, Model model)
     {
         feedbackRepository.save(feedback);
         return "redirect:/";
@@ -57,6 +57,7 @@ public class HomeController {
         dishRepository.save(dish);
         return "redirect:/";
     }
+
 
     @RequestMapping("/detail/{id}")
     public String displayDish(@PathVariable("id") long id, Model model){

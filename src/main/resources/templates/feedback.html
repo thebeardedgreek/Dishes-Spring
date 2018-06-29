@@ -5,11 +5,12 @@
     <title>Feedback Form</title>
     <link rel="stylesheet" type="text/css" href="/dishstyles.css">
 </head>
-<body>
+<body id="this">
 <form th:action="@{/savefeedback}" th:object="${aFeedback}" method="post" >
     <div class="content-wrapper app-section">
         <input type="hidden" th:field="*{id}">
-        <input type="text" th:field="*{feedbackType}">
+        <input type="radio" name="tasty" value="TASTY!" th:field="*{feedbackType}">TASTY!<br>
+        <input type="radio" name="nasty" value="NASTY!" th:field="*{feedbackType}">NASTY!<br>
         <select th:field="*{dishes}" multiple>
             <option th:each="eachDish:${dishes}" th:value="${eachDish.id}" th:text="${eachDish.name}"></option>
         </select>

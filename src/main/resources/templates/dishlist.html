@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <title>Dish List</title>
+    <link rel="stylesheet" type="text/css" href="/dishstyles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<script>
+    var clicks = 0;
+    function CountLike() {
+        clicks++;
+        document.getElementById("countClick").innerHTML = clicks + " likes";
+    }
+</script>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div  class="collapse navbar-collapse navbar-styling" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="/">
+                <img src="/img/food-logo.jpg" class="Aligner" alt="food-logo">
+            </a>
+            <li class="nav-item active navbar-styling">
+                <a class="nav-link" href="/add">Add a Dish<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown navbar-styling">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dish Posts
+                </a>
+            <div class="dropdown-menu navbar-styling" aria-labelledby="navbarDropdown">
+                <table th:each="dish: ${dishes}">
+                    <tr>
+                        <span>  <a th:text=" ${dish.name}" th:href="@{/detail/{id}(id=${dish.id})}"></a></span>
+                    </tr>
+                </table>
+            </div>
+            </li>
+        </ul>
+        <form th:action="@{/search}" class="form-inline my-2 my-lg-0 search-align navbar-styling">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<section>
+    <div class="content-wrapper app-section" th:if="${search}!=null" th:inline="text">You searched for [[${search}]]</div>
+    <div class="app-section">
+        <table th:each="dish: ${dishes}" class="app-section content-wrapper">
+            <tr>
+                <th><a th:href="@{/detail/{id}(id=${dish.id})}"><span class="nav-links" th:text="${dish.name}"></span></a></th>
+            </tr>
+            <tr>
+                <td>Description: <span th:text="${dish.description}"></span></td>
+            </tr>
+            <tr>
+                <td><img class="dish-img" th:src="${dish.imgURL}"></td>
+            </tr>
+            <tr>
+                <td><a class="nav-links" onclick="CountLike()">Like!</a></td>
+                <td><span id="countClick"></span></td>
+            </tr>
+            <tr>
+                <td><a class="nav-links" th:href="@{/update/{id}(id=${dish.id})}">Update</a></td>
+                <td><a class="nav-links" th:href="@{/delete/{id}(id=${dish.id})}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>

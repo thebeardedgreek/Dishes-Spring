@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dish Submission Form</title>
+    <link rel="stylesheet" type="text/css" href="/add-dish-style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse navbar-styling" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="/">
+                <img src="/img/food-logo.jpg" class="Aligner" alt="food-logo">
+            </a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle navbar-styling" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dish Posts
+                </a>
+                <div class="dropdown-menu navbar-styling" aria-labelledby="navbarDropdown">
+                    <table th:each="dish: ${dishes}">
+                        <tr>
+                            <span>  <a th:text=" ${dish.name}" th:href="@{/detail/{id}(id=${dish.id})}"></a></span>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+        </ul>
+        <form th:action="@{/search}" class="form-inline my-2 my-lg-0 search-align navbar-styling">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="m1">
+    <form class="content-wrapper app-section" action="#" th:action="@{/process}" th:object="${dish}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <label>Dish Name: </label>
+        <input type="text" th:field="*{name}"/>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <label>Description: </label>
+        <input type="text" th:field="*{description}"/>
+        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+        <label>URL of Image: </label>
+        <input type="text" th:field="*{imgURL}"/>
+        <span th:if="${#fields.hasErrors('imgURL')}" th:errors="*{imgURL}"></span>
+        <input class="submit" type="submit" value="Submit"/>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
